@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+        "http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+    <package name="product" extends="struts-default" namespace="/product">
+        <interceptors>
+            <interceptor name="MyInterceptor1" class="com.csw.interceptor.MyInterceptor1"></interceptor>
+
+            <interceptor-stack name="myDefaultStack">
+                <interceptor-ref name="defaultStack"></interceptor-ref>
+                <interceptor-ref name="MyInterceptor1"></interceptor-ref>
+            </interceptor-stack>
+        </interceptors>
+
+        <action name="FirstPageAction" class="com.csw.action.ProductAction"
+                method="FirstPageAction">
+            <result name="true" type="redirect">/QueryProductView.jsp</result>
+            <result name="login" type="redirect">/LoginView.jsp</result>
+            <interceptor-ref name="myDefaultStack"></interceptor-ref>
+        </action>
+
+
+        <action name="PreviousPageAction" class="com.csw.action.ProductAction"
+                method="PreviousPageAction">
+            <result name="true" type="redirect">/QueryProductView.jsp</result>
+            <interceptor-ref name="myDefaultStack"></interceptor-ref>
+        </action>
+
+        <action name="CurrentPageAction" class="com.csw.action.ProductAction"
+                method="CurrentPageAction">
+            <result name="true" type="redirect">/QueryProductView.jsp</result>
+            <interceptor-ref name="myDefaultStack"></interceptor-ref>
+        </action>
+
+        <action name="NextPageAction" class="com.csw.action.ProductAction"
+                method="NextPageAction">
+            <result name="true" type="redirect">/QueryProductView.jsp</result>
+            <interceptor-ref name="myDefaultStack"></interceptor-ref>
+        </action>
+
+        <action name="LastPageAction" class="com.csw.action.ProductAction"
+                method="LastPageAction">
+            <result name="true" type="redirect">/QueryProductView.jsp</result>
+            <interceptor-ref name="myDefaultStack"></interceptor-ref>
+        </action>
+
+
+        <action name="MapSelectAction" class="com.csw.action.ProductAction"
+                method="MapSelectAction">
+            <result name="true" type="redirect">/AddCarSuccess.jsp</result>
+            <interceptor-ref name="myDefaultStack"></interceptor-ref>
+        </action>
+
+        <action name="SubmitChangeAction" class="com.csw.action.ProductAction"
+                method="SubmitChangeAction">
+            <result name="true" type="redirect">/ShopCarView.jsp</result>
+            <result name="false" type="redirect">/ShopCarView.jsp</result>
+            <interceptor-ref name="myDefaultStack"></interceptor-ref>
+        </action>
+
+        <action name="Cancle" class="com.csw.action.ProductAction"
+                method="Cancle">
+            <result name="true" type="redirect">/ShopCarView.jsp</result>
+            <interceptor-ref name="myDefaultStack"></interceptor-ref>
+        </action>
+
+        <action name="CompleteSubmission" class="com.csw.action.ProductAction"
+                method="CompleteSubmission">
+            <result name="true" type="redirect">/ShopCarView.jsp</result>
+            <interceptor-ref name="myDefaultStack"></interceptor-ref>
+        </action>
+
+
+    </package>
+    <package name="user" extends="struts-default" namespace="/user">
+        <interceptors>
+            <interceptor name="MyInterceptor2" class="com.csw.interceptor.MyInterceptor2"></interceptor>
+
+            <interceptor-stack name="myDefaultStack">
+                <interceptor-ref name="defaultStack"></interceptor-ref>
+
+            </interceptor-stack>
+        </interceptors>
+
+        <action name="Login" class="com.csw.action.UserAction" method="Login">
+
+            <result name="true" type="chain">
+                <param name="namespace">/product</param>
+                <param name="actionName">FirstPageAction</param>
+            </result>
+            <interceptor-ref name="myDefaultStack"></interceptor-ref>
+            <result name="false" type="redirect">/LoginView.jsp</result>
+        </action>
+
+        <action name="CreateUserAction" class="com.csw.action.UserAction"
+                method="CreateUserAction">
+            <interceptor-ref name="myDefaultStack"></interceptor-ref>
+            <result name="true" type="redirect">/LoginView.jsp</result>
+            <result name="false" type="redirect">/CreateUserView.jsp</result>
+        </action>
+
+        <action name="SafeOut" class="com.csw.action.UserAction"
+                method="SafeOut">
+            <interceptor-ref name="myDefaultStack"></interceptor-ref>
+            <result name="safe" type="redirect">/LoginView.jsp</result>
+        </action>
+
+
+    </package>
+
+</struts>
